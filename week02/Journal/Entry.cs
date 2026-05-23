@@ -1,55 +1,93 @@
 using System;
+using System.Collections.Generic;
 
 public class Entry
 {
-    private readonly string _date;
-    private readonly string _prompt;
-    private readonly string _response;
+    private string _prompt;
+    private string _response;
+    private string _date;
+    private string _mood;
 
-    // Constructor for new entries
-    public Entry(string prompt, string response)
+    public Entry(string prompt, string response, string date, string mood)
     {
-        _date = DateTime.Now.ToString("yyyy-MM-dd");
         _prompt = prompt;
         _response = response;
-    }
-
-    // Constructor for loading entries from file
-    public Entry(string date, string prompt, string response)
-    {
         _date = date;
-        _prompt = prompt;
-        _response = response;
+        _mood = mood;
     }
 
-    // Display entry
-    public void Display()
+    public string GetFormattedEntry()
     {
-        Console.WriteLine($"Date: {_date}");
-        Console.WriteLine($"Prompt: {_prompt}");
-        Console.WriteLine($"Response: {_response}");
-        Console.WriteLine(new string('-', 50));
+        int wordCount = _response.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
+
+        return
+            $"Date: {_date}\n" +
+            $"Mood: {_mood}\n" +
+            $"Prompt: {_prompt}\n" +
+            $"Response: {_response}\n" +
+            $"Word Count: {wordCount}\n";
     }
 
-    // Convert entry into file format
-    public string GetFileRepresentation()
+    public string ToCSV()
     {
-        return $"{_date}|{_prompt}|{_response}";
+        return $"{EscapeCSV(_date)},{EscapeCSV(_mood)},{EscapeCSV(_prompt)},{EscapeCSV(_response)}";
     }
 
-    // Getters
-    public string GetDate()
+    public static Entry FromCSV(string csvLine)
     {
-        return _date;
+        string[] parts = ParseCSV(csvLine);
+
+        if (parts.Length == 4)
+        {
+            return new Entry(
+                parts[2],
+                parts[3],
+                parts[0],
+                parts[1]
+            );
+        }
+
+        return null;
     }
 
-    public string GetPrompt()
+    private static string EscapeCSV(string text)
     {
-        return _prompt;
+        text = text.Replace("\"", "\"\"");
+        return $"\"{text}\"";
     }
 
-    public string GetResponse()
+    private static string[] ParseCSV(string line)
     {
-        return _response;
+        List<string> values = new List<string>();
+
+        bool inQuotes = false;
+
+        string current = "";
+
+        foreach (char c in line)
+        {
+            if (c == '"')
+            {
+                inQuotes = !inQuotes;
+            }
+            else if (c == ',' && !inQuotes)
+            {
+                values.Add(current);
+                current = "";
+            }
+            else
+            {
+                current += c;
+            }
+        }
+
+        values.Add(current);
+
+        for (int i = 0; i < values.Count; i++)
+        {
+            values[i] = values[i].Replace("\"\"", "\"").Trim('"');
+        }
+
+        return values.ToArray();
     }
 }

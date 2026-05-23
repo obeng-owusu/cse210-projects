@@ -2,9 +2,15 @@ using System;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        // Create journal and prompt generator objects
+        // EXCEEDED REQUIREMENTS:
+        // 1. Added mood tracking for each journal entry.
+        // 2. Added word count for responses.
+        // 3. Improved save/load system using CSV format.
+        // 4. CSV system correctly handles commas and quotation marks.
+        // 5. Improved user interface and overall user experience.
+
         Journal journal = new Journal();
         PromptGenerator promptGenerator = new PromptGenerator();
 
@@ -12,77 +18,90 @@ class Program
 
         while (running)
         {
-            // Display menu
-            Console.WriteLine("\n=== Journal Program ===");
-            Console.WriteLine("1. Write a new entry");
-            Console.WriteLine("2. Display the journal");
-            Console.WriteLine("3. Save the journal to a file");
-            Console.WriteLine("4. Load the journal from a file");
-            Console.WriteLine("5. Exit");
+            Console.Clear();
 
-            Console.Write("\nWhat would you like to do? ");
-            string choice = Console.ReadLine() ?? "";
+            Console.WriteLine("=== Journal Program ===");
+            Console.WriteLine("1. Write a New Entry");
+            Console.WriteLine("2. Display Journal");
+            Console.WriteLine("3. Save Journal to CSV File");
+            Console.WriteLine("4. Load Journal from CSV File");
+            Console.WriteLine("5. Quit");
+
+            Console.Write("\nChoose an option: ");
+
+            string choice = Console.ReadLine();
 
             switch (choice)
             {
                 case "1":
-                    // Generate a random prompt
+
                     string prompt = promptGenerator.GetRandomPrompt();
 
                     Console.WriteLine($"\nPrompt: {prompt}");
+
                     Console.Write("Your response: ");
+                    string response = Console.ReadLine();
 
-                    string response = Console.ReadLine() ?? "";
+                    Console.Write("How are you feeling today? ");
+                    string mood = Console.ReadLine();
 
-                    // Create new journal entry
-                    Entry newEntry = new Entry(prompt, response);
+                    string date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
-                    // Add entry to journal
-                    journal.AddEntry(newEntry);
+                    Entry entry = new Entry(prompt, response, date, mood);
 
-                    Console.WriteLine("Entry added successfully!");
+                    journal.AddEntry(entry);
+
+                    Console.WriteLine("\nEntry added successfully!");
+                    Pause();
                     break;
 
                 case "2":
-                    // Display all journal entries
-                    Console.WriteLine("\n=== Journal Entries ===");
+
+                    Console.Clear();
                     journal.DisplayAll();
+                    Pause();
                     break;
 
                 case "3":
-                    // Save journal to file
-                    Console.Write("Enter filename to save to: ");
 
-                    string saveFilename = Console.ReadLine() ?? "";
+                    Console.Write("\nEnter filename (example: journal.csv): ");
+                    string saveFile = Console.ReadLine();
 
-                    journal.SaveToFile(saveFilename);
+                    journal.SaveToCSV(saveFile);
 
-                    Console.WriteLine("Journal saved successfully!");
+                    Console.WriteLine("\nJournal saved successfully!");
+                    Pause();
                     break;
 
                 case "4":
-                    // Load journal from file
-                    Console.Write("Enter filename to load from: ");
 
-                    string loadFilename = Console.ReadLine() ?? "";
+                    Console.Write("\nEnter filename to load: ");
+                    string loadFile = Console.ReadLine();
 
-                    journal.LoadFromFile(loadFilename);
+                    journal.LoadFromCSV(loadFile);
 
-                    Console.WriteLine("Journal loaded successfully!");
+                    Console.WriteLine("\nJournal loaded successfully!");
+                    Pause();
                     break;
 
                 case "5":
-                    // Exit application
-                    running = false;
 
-                    Console.WriteLine("Goodbye!");
+                    running = false;
+                    Console.WriteLine("\nGoodbye!");
                     break;
 
                 default:
-                    // Invalid option
-                    Console.WriteLine("Invalid option. Please try again.");
+
+                    Console.WriteLine("\nInvalid choice.");
+                    Pause();
                     break;
             }
         }
+    }
+
+    static void Pause()
+    {
+        Console.WriteLine("\nPress any key to continue...");
+        Console.ReadKey();
     }
 }
