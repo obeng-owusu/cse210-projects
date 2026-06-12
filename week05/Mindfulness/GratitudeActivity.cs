@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace MindfulnessApp
 {
-    // Gratitude Activity Class - Inherits from Activity
-    // This is a NEW 4th activity that exceeds the core requirements
+    /// <summary>
+    /// Gratitude Activity - Exceeds core requirements by adding a 4th activity type.
+    /// </summary>
     public class GratitudeActivity : Activity
     {
         private List<string> _prompts;
@@ -41,7 +42,7 @@ namespace MindfulnessApp
                 Console.ReadLine();
             }
 
-            Console.WriteLine("\n Gratitude is a powerful practice. Keep cultivating it! ");
+            Console.WriteLine("\n✨ Gratitude is a powerful practice. Keep cultivating it! ✨");
             DisplayEndingMessage();
         }
     }

@@ -6,8 +6,6 @@ using System.Threading;
 
 namespace MindfulnessApp
 {
-    // Session Manager Class - Handles statistics and file I/O
-    // This demonstrates separation of concerns (encapsulation principle)
     public class SessionManager
     {
         private Dictionary<string, int> _activityCounts;
@@ -30,7 +28,6 @@ namespace MindfulnessApp
             LoadProgress();
         }
 
-        // Record a completed activity
         public void RecordActivity(string activityName, int duration)
         {
             if (_activityCounts.ContainsKey(activityName))
@@ -42,7 +39,6 @@ namespace MindfulnessApp
             SaveProgress();
         }
 
-        // Display all statistics to the user
         public void DisplayStatistics()
         {
             Console.Clear();
@@ -70,7 +66,6 @@ namespace MindfulnessApp
             }
         }
 
-        // Save progress to file (persistence)
         private void SaveProgress()
         {
             try
@@ -91,7 +86,6 @@ namespace MindfulnessApp
             }
         }
 
-        // Load progress from file (persistence)
         private void LoadProgress()
         {
             if (File.Exists(_logFileName))

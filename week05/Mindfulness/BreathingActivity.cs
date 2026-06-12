@@ -3,7 +3,6 @@ using System.Threading;
 
 namespace MindfulnessApp
 {
-    // Breathing Activity Class - Inherits from Activity
     public class BreathingActivity : Activity
     {
         public BreathingActivity(SessionManager sessionManager) : base(
@@ -13,7 +12,6 @@ namespace MindfulnessApp
         {
         }
 
-        // Enhanced breathing animation - expands and contracts like a real breath
         private void AnimateBreathIn()
         {
             Console.WriteLine();

@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace MindfulnessApp
 {
-    // Listing Activity Class - Inherits from Activity
     public class ListingActivity : Activity
     {
         private List<string> _prompts;
         private List<string> _unusedPrompts;
         private Random _random;
-        private int _itemCount;
 
         public ListingActivity(SessionManager sessionManager) : base(
             sessionManager,
@@ -33,7 +31,6 @@ namespace MindfulnessApp
             _unusedPrompts = new List<string>(_prompts);
         }
 
-        // Smart randomization - no repeats until all prompts are used
         private string GetRandomPrompt()
         {
             if (_unusedPrompts.Count == 0)
@@ -48,8 +45,7 @@ namespace MindfulnessApp
 
         public override void Run()
         {
-            // Reset counter each session - prevents incorrect accumulation
-            _itemCount = 0;
+            int itemCount = 0;
 
             DisplayStartingMessage();
 
@@ -62,15 +58,14 @@ namespace MindfulnessApp
 
             DateTime endTime = DateTime.Now.AddSeconds(_duration);
 
-            // Keep listing items until time runs out
             while (DateTime.Now < endTime)
             {
                 Console.Write("> ");
                 Console.ReadLine();
-                _itemCount++;
+                itemCount++;
             }
 
-            Console.WriteLine($"\nYou listed {_itemCount} items!");
+            Console.WriteLine($"\nYou listed {itemCount} items!");
             DisplayEndingMessage();
         }
     }

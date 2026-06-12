@@ -4,7 +4,6 @@ using System.Threading;
 
 namespace MindfulnessApp
 {
-    // Reflection Activity Class - Inherits from Activity
     public class ReflectionActivity : Activity
     {
         private List<string> _prompts;
@@ -20,7 +19,6 @@ namespace MindfulnessApp
         {
             _random = new Random();
 
-            // List of available prompts
             _prompts = new List<string>
             {
                 "Think of a time when you stood up for someone else.",
@@ -29,7 +27,6 @@ namespace MindfulnessApp
                 "Think of a time when you did something truly selfless."
             };
 
-            // List of available reflection questions
             _questions = new List<string>
             {
                 "Why was this experience meaningful to you?",
@@ -57,7 +54,6 @@ namespace MindfulnessApp
             _unusedQuestions = new List<string>(_questions);
         }
 
-        // Smart randomization - no repeats until all prompts are used
         private string GetRandomPrompt()
         {
             if (_unusedPrompts.Count == 0)
@@ -70,7 +66,6 @@ namespace MindfulnessApp
             return prompt;
         }
 
-        // Smart randomization - no repeats until all questions are used
         private string GetRandomQuestion()
         {
             if (_unusedQuestions.Count == 0)
@@ -87,7 +82,6 @@ namespace MindfulnessApp
         {
             DisplayStartingMessage();
 
-            // Display a random prompt
             string prompt = GetRandomPrompt();
             Console.WriteLine("Consider the following prompt:\n");
             Console.WriteLine($"--- {prompt} ---\n");
@@ -97,11 +91,10 @@ namespace MindfulnessApp
             Console.WriteLine("Now ponder on each of the following questions as they relate to this experience.");
             Console.Write("You may begin in: ");
             ShowCountDown(3);
-            Console.Clear();
+            Console.WriteLine();
 
             DateTime endTime = DateTime.Now.AddSeconds(_duration);
 
-            // Keep showing random questions until time runs out
             while (DateTime.Now < endTime)
             {
                 string question = GetRandomQuestion();

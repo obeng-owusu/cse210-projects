@@ -1,7 +1,7 @@
 /*
 EXCEEDING REQUIREMENTS
 
-This project exceeds the core requirements :
+This project exceeds the core requirements:
 
 1. Added a new Gratitude Activity that encourages users to focus on positive experiences and appreciation.
 2. Added a SessionManager class that tracks statistics such as completed activities, total mindfulness time, 
@@ -11,10 +11,7 @@ This project exceeds the core requirements :
 5. Enhanced the Breathing Activity with a visual breathing animation that expands and contracts to guide inhaling and exhaling.
 6. Applied additional object-oriented design by separating activity tracking and file management responsibilities into their own class.
 7. Added input validation to prevent crashes from invalid duration entries.
-8. Ensured item count resets properly between Listing Activity sessions.
-
-These enhancements provide additional functionality, improved user experience, file persistence, 
-and stronger object-oriented design beyond the assignment requirements.
+8. Ensured proper encapsulation by making fields private unless derived classes need direct access.
 */
 
 using System;
@@ -90,7 +87,7 @@ namespace MindfulnessApp
             Console.WriteLine("\n═══════════════════════════════════════════");
             Console.WriteLine("              MENU OPTIONS");
             Console.WriteLine("═══════════════════════════════════════════");
-            Console.WriteLine("1.   Breathing Activity");
+            Console.WriteLine("1.  Breathing Activity");
             Console.WriteLine("2.  Reflection Activity");
             Console.WriteLine("3.  Listing Activity");
             Console.WriteLine("4.  Gratitude Activity");

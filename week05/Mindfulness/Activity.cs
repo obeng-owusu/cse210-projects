@@ -4,14 +4,16 @@ using System.Threading;
 
 namespace MindfulnessApp
 {
-    // Base Activity Class - Contains shared attributes and behaviors
-    // All activities inherit from this class (Inheritance principle)
+    /// <summary>
+    /// Base Activity Class - Contains shared attributes and behaviors.
+    /// All activities inherit from this class (Inheritance principle).
+    /// </summary>
     public abstract class Activity
     {
-        protected string _name;
-        protected string _description;
+        private string _name;
+        private string _description;
+        private SessionManager _sessionManager;
         protected int _duration;
-        protected SessionManager _sessionManager;
 
         public Activity(SessionManager sessionManager, string name, string description)
         {
@@ -20,7 +22,6 @@ namespace MindfulnessApp
             _description = description;
         }
 
-        // Common starting message for all activities
         public void DisplayStartingMessage()
         {
             Console.Clear();
@@ -28,7 +29,6 @@ namespace MindfulnessApp
             Console.WriteLine(_description);
             Console.WriteLine();
 
-            // Input validation to prevent crashes
             Console.Write("How long, in seconds, would you like for your session? ");
             while (!int.TryParse(Console.ReadLine(), out _duration) || _duration <= 0)
             {
@@ -41,7 +41,6 @@ namespace MindfulnessApp
             Console.WriteLine();
         }
 
-        // Common ending message for all activities
         public void DisplayEndingMessage()
         {
             Console.WriteLine();
@@ -51,11 +50,9 @@ namespace MindfulnessApp
             Console.WriteLine($"You have completed another {_duration} seconds of the {_name}.");
             ShowSpinner(3);
 
-            // Record this activity in the session manager
             _sessionManager.RecordActivity(_name, _duration);
         }
 
-        // Animation: Show spinner (| / - \)
         protected void ShowSpinner(int seconds)
         {
             List<string> spinnerFrames = new List<string> { "|", "/", "-", "\\" };
@@ -71,7 +68,6 @@ namespace MindfulnessApp
             }
         }
 
-        // Animation: Countdown timer (5,4,3,2,1)
         protected void ShowCountDown(int seconds)
         {
             for (int i = seconds; i > 0; i--)
@@ -82,8 +78,6 @@ namespace MindfulnessApp
             }
         }
 
-        // Abstract method to be implemented by derived classes
-        // This demonstrates abstraction - each activity implements its own behavior
         public abstract void Run();
     }
 }
